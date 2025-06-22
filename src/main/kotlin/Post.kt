@@ -5,13 +5,14 @@ data class Post(
     val date: Int = 1749576224,
     val text: String = "Мир, дружба, жвачка",
     val friendsOnly: Boolean = true,
-    val postType: String = "post",
+    val postType: String?,
     val isPinned: Boolean = false,
     val isFavorite: Boolean = true,
-    val comments: Comments,
-    val likes: Likes,
+    val comments: Comments?,
+    val likes: Likes?,
     val reposts: Reposts,
-    val views: Views
+    val views: Views,
+    val attachments: Array<Attachment>
 )
 
 data class Comments(
