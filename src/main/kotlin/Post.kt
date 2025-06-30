@@ -36,9 +36,12 @@ data class Views(
     val count: Int = 50
 )
 
+class PostNotFoundException(message: String) : RuntimeException(message)
+
 object WallService {
     private var idNumber: Int = 0
     private var posts = emptyArray<Post>()
+    private var comments = emptyArray<Comment>()
 
     fun add(post: Post): Post {
         idNumber ++
@@ -60,5 +63,15 @@ object WallService {
     fun clear() {
         posts = emptyArray()
         idNumber = 0
+    }
+
+    fun createComment(postId: Int, comment: Comment): Comment {
+        for (post in posts) {
+            if (postId == post.id) {
+                comments += comment
+                return comment
+            }
+        }
+        throw PostNotFoundException ("No post with $postId")
     }
 }

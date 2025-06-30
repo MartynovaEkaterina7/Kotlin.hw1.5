@@ -136,4 +136,79 @@ class WallServiceTest {
         //assert
         assertFalse(actual = result)
     }
+
+    @Test(expected = PostNotFoundException::class)
+    fun shouldThrow() {
+        // arrange
+        WallService.add(
+            Post(
+                id = 1,
+                ownerId = 1001,
+                fromId = 1002,
+                date = 1749576224,
+                text = "Мир, дружба, жвачка",
+                friendsOnly = true,
+                postType = null,
+                isPinned = false,
+                isFavorite = true,
+                comments = null,
+                likes = null,
+                reposts = Reposts(24, true),
+                views = Views(50),
+                attachments = emptyArray()
+            )
+        )
+        val newComment = Comment(
+            id = 1,
+            formId = 2,
+            postId = 3,
+            date = 1749576224,
+            text = "Крутой пост"
+        )
+
+        //act
+        val result = WallService.createComment(
+            3,
+            comment = newComment,
+        )
+    }
+
+    @Test
+    fun addComment() {
+        // arrange
+        WallService.add(
+            Post(
+                id = 1,
+                ownerId = 1001,
+                fromId = 1002,
+                date = 1749576224,
+                text = "Мир, дружба, жвачка",
+                friendsOnly = true,
+                postType = null,
+                isPinned = false,
+                isFavorite = true,
+                comments = null,
+                likes = null,
+                reposts = Reposts(24, true),
+                views = Views(50),
+                attachments = emptyArray()
+            )
+        )
+        val newComment = Comment(
+            id = 1,
+            formId = 2,
+            postId = 3,
+            date = 1749576224,
+            text = "Крутой пост"
+        )
+
+        //act
+        val result = WallService.createComment(
+            1,
+            comment = newComment,
+        )
+
+        //assert
+        assertEquals(newComment, result)
+    }
 }
